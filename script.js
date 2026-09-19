@@ -3,10 +3,7 @@ const VERIFY_DURATION = 3;
 
 const SUPABASE_URL = "https://kwmbdafkbwgtajoaehql.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3bWJkYWZrYndndGFqb2FlaHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MjIwMDksImV4cCI6MjEwNTM5ODAwOX0.yMd1POjCECsSxAjsAqv6psmtJirGUBEkoGveoa7DgMU";
-const VERIFIED_SITES = [
-  { domain: "https://www.kingtoppro1.com", name: "KINGTOPPRO1", url: "https://kingtoppro1.com/" },
-  { domain: "https://www.kingtopbest1.com", name: "KINGTOPBEST1", url: "https://kingtopbest1.com/" }
-];
+const VERIFIED_URL = "https://masterworldbet.com/sign-up?ref_agent=1feacd0466b9&ref_zean=9ED5866AF713";
 
 const input = document.getElementById("website");
 const form = document.getElementById("scanForm");
@@ -14,7 +11,7 @@ const button = document.getElementById("scanButton");
 const dynamic = document.getElementById("dynamic");
 
 function alertBox(message) {
-  dynamic.innerHTML = `<div class="divider"></div><div class="alert">[!] ${escapeHtml(message)}</div>`;
+  dynamic.innerHTML = `<div class="divider"></div><div class="alert"><strong>⚠️ คำเตือน / WARNING</strong><span>${escapeHtml(message)}</span></div>`;
 }
 
 function normalizeDomain(raw) {
@@ -90,16 +87,16 @@ function resultItem(label, value, status = "") {
 function renderSystemMonitor() {
   return `
     <section class="system-monitor" aria-label="System status">
-      <div class="monitor-item"><span>SYSTEM STATUS</span><strong><i></i> ONLINE</strong></div>
-      <div class="monitor-item"><span>DATABASE</span><strong><i></i> CONNECTED</strong></div>
-      <div class="monitor-item"><span>SCAN ENGINE</span><strong><i></i> READY</strong></div>
+      <div class="monitor-item"><span>ระบบตรวจสอบ / SYSTEM</span><strong><i></i> พร้อมใช้งาน</strong></div>
+      <div class="monitor-item"><span>ฐานข้อมูล / DATABASE</span><strong><i></i> เชื่อมต่อแล้ว</strong></div>
+      <div class="monitor-item"><span>เครื่องสแกน / SCANNER</span><strong><i></i> พร้อมตรวจ</strong></div>
     </section>`;
 }
 
 function renderActivity(lines) {
   return `
     <section class="activity-panel">
-      <div class="activity-title">RECENT ACTIVITY / SYSTEM LOG</div>
+      <div class="activity-title">บันทึกการทำงาน / SYSTEM LOG</div>
       <div class="activity-log">${lines.map(line => `<div>${escapeHtml(line)}</div>`).join("")}</div>
     </section>`;
 }
@@ -107,38 +104,22 @@ function renderActivity(lines) {
 function renderVerifiedButton() {
   return `
     <section class="verified-offer">
-      <div class="verified-offer-title">เว็บที่ผ่านการตรวจสอบแล้ว <strong>• VERIFIED</strong></div>
-      <div class="verified-offer-copy">ตรวจสอบสถานะของเว็บไซต์ที่แนะนำก่อนเข้าใช้งาน</div>
+      <div class="verified-offer-kicker">⭐ เว็บที่เราแนะนำ</div>
+      <div class="verified-offer-title">MASTERWORLDBET <strong>• VERIFIED</strong></div>
+      <div class="verified-offer-copy">ตรวจสอบสถานะของเว็บไซต์แนะนำก่อนเข้าใช้งาน</div>
       <button id="verifiedButton" class="verified-button" type="button">
-        <span>ตรวจสอบสถานะ</span>
+        <span>ตรวจสอบ MASTERWORLDBET</span>
         <strong>• VERIFY NOW</strong>
       </button>
     </section>`;
 }
 
-function renderVerifiedLink(site) {
+function renderVerifiedLink() {
   return `
-    <a class="visit-button" href="${site.url}" target="_blank" rel="noopener noreferrer">
-      <span>เข้าสู่เว็บไซต์</span>
+    <a class="visit-button" href="${VERIFIED_URL}" target="_blank" rel="noopener noreferrer">
+      <span>เข้าเว็บไซต์ MasterWorldBet</span>
       <strong>• VISIT WEBSITE →</strong>
     </a>`;
-}
-
-function renderVerifiedSiteCard(site, record) {
-  const rate = record?.win_rate != null ? `${record.win_rate}%` : "—";
-  const status = record?.user_status === "UNLOCK" ? "UNLOCKED" : "LOCKED";
-
-  return `
-    <div class="master-offer-card">
-      <div class="master-offer-label">เว็บที่ผ่านการตรวจสอบแล้ว <strong>• VERIFIED</strong></div>
-      <div class="master-offer-brand">${escapeHtml(site.name)}</div>
-      <div class="master-offer-grid">
-        <div><span>สถานะ / STATUS</span><strong class="${status === "UNLOCKED" ? "status-ok" : "status-bad"}">${status}</strong></div>
-        <div><span>อัตราชนะ / WIN RATE</span><strong>${escapeHtml(rate)}</strong></div>
-      </div>
-      <div class="master-offer-note">✓ SYSTEM CHECKED &nbsp; • &nbsp; READY TO ACCESS</div>
-      ${renderVerifiedLink(site)}
-    </div>`;
 }
 
 function runVerifiedCheck() {
@@ -150,7 +131,7 @@ function runVerifiedCheck() {
   const verification = document.createElement("section");
   verification.className = "verification-panel";
   verification.innerHTML = `
-    <div class="verification-head"><span>VERIFIED ACCESS CHECK</span><strong id="verifyPercent">0%</strong></div>
+    <div class="verification-head"><span>กำลังตรวจสอบเว็บแนะนำ / VERIFIED CHECK</span><strong id="verifyPercent">0%</strong></div>
     <div class="verification-track"><div id="verifyBar" class="verification-bar"></div></div>
     <div class="verification-log" id="verificationLog"><div>&gt; INITIALIZING CONNECTION...</div></div>`;
 
@@ -191,15 +172,25 @@ function runVerifiedCheck() {
           </div>
           <div class="master-offer-loading">กำลังโหลดสถานะเว็บไซต์ / LOADING VERIFIED STATUS...</div>`;
 
-        Promise.all(VERIFIED_SITES.map(site => lookupFromSupabase(site.domain)))
-          .then(records => {
+        lookupFromSupabase("https://www.masterworldbet.com")
+          .then(masterRecord => {
+            const rate = masterRecord?.win_rate != null ? `${masterRecord.win_rate}%` : "—";
+            const status = masterRecord?.user_status === "UNLOCK" ? "UNLOCKED" : "LOCKED";
             verification.innerHTML = `
               <div class="verified-success">
                 <span class="success-mark">✓</span>
                 <div><strong>ACCESS VERIFIED</strong><small>การตรวจสอบเสร็จสมบูรณ์</small></div>
               </div>
-              <div class="verified-offer-list">
-                ${VERIFIED_SITES.map((site, index) => renderVerifiedSiteCard(site, records[index])).join("")}
+              <div class="master-offer-card">
+                <div class="master-offer-kicker">⭐ เว็บที่เราแนะนำ</div>
+                <div class="master-offer-label">ตรวจสอบแล้ว <strong>• VERIFIED WEBSITE</strong></div>
+                <div class="master-offer-brand">MASTERWORLDBET</div>
+                <div class="master-offer-grid">
+                  <div><span>สถานะ / STATUS</span><strong class="${status === "UNLOCKED" ? "status-ok" : "status-bad"}">${status}</strong></div>
+                  <div><span>อัตราชนะ / WIN RATE</span><strong>${escapeHtml(rate)}</strong></div>
+                </div>
+                <div class="master-offer-note">✓ ระบบตรวจสอบแล้ว &nbsp; • &nbsp; ไม่พบการปรับอัตราชนะ</div>
+                ${renderVerifiedLink()}
               </div>`;
           })
           .catch(() => {
@@ -208,9 +199,7 @@ function runVerifiedCheck() {
                 <span class="success-mark">✓</span>
                 <div><strong>ACCESS VERIFIED</strong><small>การตรวจสอบเสร็จสมบูรณ์</small></div>
               </div>
-              <div class="verified-offer-list">
-                ${VERIFIED_SITES.map(site => renderVerifiedSiteCard(site, null)).join("")}
-              </div>`;
+              ${renderVerifiedLink()}`;
           });
       }, 350);
     }
@@ -228,20 +217,22 @@ form.addEventListener("submit", async (event) => {
 
   input.disabled = true;
   button.disabled = true;
-  button.textContent = "SCANNING...";
+  button.textContent = "กำลังตรวจสอบ... / SCANNING";
 
   let seconds = DURATION;
   dynamic.innerHTML = `
     <div class="divider"></div>
     <section class="scan-state">
-      <div class="scan-title">กำลังตรวจสอบ / ANALYZING: <b>${escapeHtml(domain)}</b></div>
+      <div class="scan-title"><span>กำลังตรวจสอบเว็บไซต์ / SCANNING TARGET</span><b>${escapeHtml(domain)}</b></div>
       <div class="progress-track"><div id="bar" class="progress-bar"></div></div>
-      <div class="scan-meta"><span>ANALYZING SYSTEM...</span><strong id="seconds">10s</strong></div>
-      <div class="log">
-        <div>&gt; ตรวจสอบสถานะผู้ใช้ / USER STATUS...</div>
-        <div>&gt; ตรวจสอบอัตราชนะ / WIN RATE...</div>
-        <div>&gt; ตรวจสอบ API server...</div>
-        <div>&gt; เชื่อมต่อฐานข้อมูล / DATABASE...</div>
+      <div class="scan-meta"><span>กำลังวิเคราะห์ระบบ / ANALYZING</span><strong id="seconds">10s</strong></div>
+      <div class="log scanner-console">
+        <div>&gt; เริ่มระบบตรวจสอบ................ <b>OK</b></div>
+        <div>&gt; ตรวจสอบเว็บไซต์................. <b>OK</b></div>
+        <div>&gt; ตรวจสอบอัตราชนะ................ <b>RUNNING</b></div>
+        <div>&gt; ตรวจสอบการปรับข้อมูล............ <b>RUNNING</b></div>
+        <div>&gt; ตรวจสอบเซิร์ฟเวอร์............... <b>RUNNING</b></div>
+        <div>&gt; สร้างรายงานผล................... <b>WAIT</b></div>
       </div>
     </section>`;
 
@@ -260,19 +251,29 @@ form.addEventListener("submit", async (event) => {
     const record = await lookupFromSupabase(domain);
     if (!record) throw new Error("NO_RECORD");
 
+    const unlocked = record.user_status === "UNLOCK";
+    const modified = record.win_rate_modified !== "NO";
+    const riskClass = unlocked && !modified ? "risk-low" : "risk-warning";
+    const riskText = unlocked && !modified ? "ต่ำ / LOW" : "ควรระวัง / WARNING";
+
     dynamic.innerHTML = `
       <div class="divider"></div>
       <section class="result">
-        <div class="result-head"><span>ตรวจสอบเสร็จสิ้น / SCAN COMPLETE</span><b>✓</b></div>
-        <div class="domain-line">เว็บไซต์ / WEBSITE: <b>${escapeHtml(record.domain)}</b></div>
+        <div class="result-head"><span>🛡️ ผลการตรวจสอบ / SCAN RESULT</span><b>✓</b></div>
+        <div class="scan-complete-badge">✓ ตรวจสอบเสร็จแล้ว <span>SCAN COMPLETE</span></div>
+        <div class="domain-line">เว็บไซต์ที่ตรวจสอบ / WEBSITE: <b>${escapeHtml(record.domain)}</b></div>
         <div class="result-grid">
-          ${resultItem("สถานะผู้ใช้ / USER STATUS", record.user_status === "UNLOCK" ? "UNLOCK" : "LOCK", record.user_status === "UNLOCK" ? "ok" : "bad")}
+          ${resultItem("สถานะเว็บไซต์ / USER STATUS", unlocked ? "UNLOCK / ปลดล็อก" : "LOCK / ล็อก", unlocked ? "ok" : "bad")}
           ${resultItem("อัตราชนะปัจจุบัน / CURRENT WIN RATE", `${record.win_rate}%`)}
-          ${resultItem("มีการปรับอัตราชนะ / WIN RATE MODIFIED", record.win_rate_modified === "NO" ? "ไม่ / NO" : "ใช่ / YES", record.win_rate_modified === "NO" ? "ok" : "bad")}
-          ${resultItem("เซิร์ฟเวอร์ API / API SERVER", record.api_server)}
+          ${resultItem("มีการปรับอัตราชนะ / WIN RATE MODIFIED", modified ? "ใช่ / YES" : "ไม่ / NO", modified ? "bad" : "ok")}
+          ${resultItem("เซิร์ฟเวอร์ / API SERVER", record.api_server)}
+        </div>
+        <div class="risk-panel ${riskClass}">
+          <div><span>ระดับความเสี่ยง / RISK LEVEL</span><strong>${riskText}</strong></div>
+          <small>${unlocked && !modified ? "ไม่พบสัญญาณการปรับอัตราชนะจากข้อมูลที่ตรวจสอบ" : "ควรพิจารณาข้อมูลก่อนเข้าใช้งาน"}</small>
         </div>
         ${renderVerifiedButton()}
-        ${renderActivity(["> SYSTEM READY ✓", "> DATABASE CONNECTED ✓", "> SCAN COMPLETE ✓"])}
+        ${renderActivity(["> TARGET RECEIVED ✓", "> WEBSITE ANALYZED ✓", "> API ROUTE CHECKED ✓", "> SCAN COMPLETE ✓"])}
       </section>`;
 
     document.getElementById("verifiedButton")?.addEventListener("click", runVerifiedCheck);
