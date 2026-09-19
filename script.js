@@ -1,6 +1,17 @@
 const DURATION = 10;
 const VERIFY_DURATION = 3;
 
+// Local browser scan limit.
+// General users: 3 scans total on this browser.
+// Master browser: unlimited after activating Master mode once.
+const SCAN_LIMIT = 3;
+const SCAN_COUNT_KEY = "masterscan_scan_count";
+const MASTER_MODE_KEY = "masterscan_master_mode";
+const MASTER_ACTIVATION_KEY = "masterscan_master_activation";
+
+// This is only a local/demo bypass. It is NOT a secure authentication system.
+const MASTER_KEY = "MS-MASTER-2026";
+
 const SUPABASE_URL = "https://kwmbdafkbwgtajoaehql.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3bWJkYWZrYndndGFqb2FlaHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MjIwMDksImV4cCI6MjEwNTM5ODAwOX0.yMd1POjCECsSxAjsAqv6psmtJirGUBEkoGveoa7DgMU";
 const VERIFIED_URL = "https://masterworldbet.com/sign-up?ref_agent=1feacd0466b9&ref_zean=9ED5866AF713";
@@ -9,6 +20,60 @@ const input = document.getElementById("website");
 const form = document.getElementById("scanForm");
 const button = document.getElementById("scanButton");
 const dynamic = document.getElementById("dynamic");
+
+activateMasterFromUrl();
+
+function getScanCount() {
+  const value = Number.parseInt(localStorage.getItem(SCAN_COUNT_KEY) || "0", 10);
+  return Number.isFinite(value) && value >= 0 ? value : 0;
+}
+
+function isMasterMode() {
+  return localStorage.getItem(MASTER_MODE_KEY) === "true";
+}
+
+function updateScanQuota() {
+  const quota = document.getElementById("scanQuota");
+  if (!quota) return;
+
+  if (isMasterMode()) {
+    quota.innerHTML = '<span>SCAN CREDIT</span><strong>UNLIMITED</strong>';
+    quota.classList.add("master-quota");
+    return;
+  }
+
+  const count = Math.min(getScanCount(), SCAN_LIMIT);
+  quota.innerHTML = `<span>SCAN CREDIT</span><strong>${count} / ${SCAN_LIMIT}</strong>`;
+  quota.classList.remove("master-quota");
+}
+
+function activateMasterFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get("master");
+
+  if (key !== MASTER_KEY) return;
+
+  localStorage.setItem(MASTER_MODE_KEY, "true");
+  localStorage.setItem(MASTER_ACTIVATION_KEY, "1");
+
+  // Remove the activation key from the visible URL after activation.
+  const cleanUrl = `${window.location.origin}${window.location.pathname}`;
+  window.history.replaceState({}, document.title, cleanUrl);
+}
+
+function canScan() {
+  return isMasterMode() || getScanCount() < SCAN_LIMIT;
+}
+
+function consumeScan() {
+  if (isMasterMode()) return;
+  localStorage.setItem(SCAN_COUNT_KEY, String(getScanCount() + 1));
+  updateScanQuota();
+}
+
+function showQuotaLimit() {
+  alertBox("สิทธิ์การสแกนครบ 3 ครั้งแล้ว / SCAN LIMIT REACHED");
+}
 
 function alertBox(message) {
   dynamic.innerHTML = `<div class="divider"></div><div class="alert">[!] ${escapeHtml(message)}</div>`;
@@ -213,6 +278,14 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
+  if (!canScan()) {
+    showQuotaLimit();
+    return;
+  }
+
+  // Count the scan immediately so repeated clicks cannot start extra scans.
+  consumeScan();
+
   input.disabled = true;
   button.disabled = true;
   button.textContent = "SCANNING...";
@@ -269,16 +342,27 @@ form.addEventListener("submit", async (event) => {
   }
 
   input.disabled = false;
-  button.disabled = false;
-  button.textContent = "SCAN SYSTEM / เริ่มสแกน";
+  button.disabled = !canScan();
+  button.textContent = canScan() ? "SCAN SYSTEM / เริ่มสแกน" : "SCAN LIMIT REACHED";
+  updateScanQuota();
 });
 
 // System monitor on the initial screen.
-form.insertAdjacentHTML("afterend", `${renderSystemMonitor()}${renderActivity([
-  "> SYSTEM READY ✓",
-  "> DATABASE CONNECTED ✓",
-  "> SCAN ENGINE READY ✓"
-])}`);
+form.insertAdjacentHTML("afterend", `
+  <div id="scanQuota" class="scan-quota">
+    <span>SCAN CREDIT</span>
+    <strong>0 / ${SCAN_LIMIT}</strong>
+  </div>
+  ${renderSystemMonitor()}
+  ${renderActivity([
+    "> SYSTEM READY ✓",
+    "> DATABASE CONNECTED ✓",
+    "> SCAN ENGINE READY ✓"
+  ])}
+`);
+updateScanQuota();
+button.disabled = !canScan();
+if (!canScan()) button.textContent = "SCAN LIMIT REACHED";
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, character => ({
