@@ -14,6 +14,36 @@ function alertBox(message) {
   dynamic.innerHTML = `<div class="divider"></div><div class="alert"><strong>⚠️ คำเตือน / WARNING</strong><span>${escapeHtml(message)}</span></div>`;
 }
 
+const BLOCKED_INPUTS = new Set([
+  "test", "testing", "test123", "abc", "abcd", "hello", "hello123",
+  "aaa", "aaaa", "bbb", "123", "1234", "12345",
+  "demo", "demo123", "sample", "example", "example123",
+  "qwerty", "asdf", "asdfgh", "xxx", "xxxx", "foo", "bar",
+  "foobar", "website", "web", "google", "youtube", "facebook",
+  "instagram", "tiktok", "twitter", "x", "linkedin", "reddit",
+  "wikipedia", "yahoo", "bing", "whatsapp", "telegram", "netflix",
+  "amazon", "shopee", "lazada", "chatgpt", "openai"
+]);
+
+function isBlockedInput(raw) {
+  const value = String(raw ?? "").trim().toLowerCase();
+  if (!value) return true;
+
+  // Check the simple name the user typed, plus a normalized hostname.
+  const withoutProtocol = value
+    .replace(/^https?:\/\//i, "")
+    .split(/[/?#]/)[0]
+    .replace(/^www\./i, "")
+    .replace(/\.$/, "");
+
+  const hostname = withoutProtocol.split(":")[0];
+  const shortName = hostname.split(".")[0];
+
+  return BLOCKED_INPUTS.has(value) ||
+    BLOCKED_INPUTS.has(hostname) ||
+    BLOCKED_INPUTS.has(shortName);
+}
+
 function normalizeDomain(raw) {
   let value = String(raw ?? "").trim().toLowerCase();
 
@@ -209,9 +239,14 @@ function runVerifiedCheck() {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  if (isBlockedInput(input.value)) {
+    alertBox("กรุณากรอกชื่อเว็บไซต์ที่คุณกำลังใช้งานอยู่");
+    return;
+  }
+
   const domain = normalizeDomain(input.value);
   if (!domain) {
-    alertBox("กรุณากรอกชื่อเว็บไซต์ที่ถูกต้อง เช่น win555 หรือ win555.com");
+    alertBox("กรุณากรอกชื่อเว็บไซต์ที่คุณกำลังใช้งานอยู่");
     return;
   }
 
