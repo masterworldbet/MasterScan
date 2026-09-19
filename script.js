@@ -15,15 +15,42 @@ function alertBox(message) {
 }
 
 function normalizeDomain(raw) {
-  let value = raw.trim().toLowerCase();
+  let value = String(raw ?? "").trim().toLowerCase();
+
   if (!value) return null;
-  if (/[^\x00-\x7F]/.test(value)) return null;
 
-  value = value.replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0].trim();
-  if (/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(value)) value = `${value}.com`;
+  // MasterScan accepts English/ASCII website names only.
+  if (!/^[\x00-\x7F]+$/.test(value)) return null;
 
-  const validDomain = /^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i;
-  if (!validDomain.test(value)) return null;
+  // Remove protocol and anything after the hostname.
+  value = value
+    .replace(/^https?:\/\//i, "")
+    .split(/[/?#]/)[0]
+    .trim()
+    .replace(/^www\./i, "");
+
+  // Remove an accidental trailing dot.
+  value = value.replace(/\.$/, "");
+
+  if (!value) return null;
+
+  // Short name: win555 -> win555.com
+  if (/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(value)) {
+    value += ".com";
+  }
+
+  // Standard hostname validation.
+  const labels = value.split(".");
+  if (labels.length < 2) return null;
+
+  const validLabel = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i;
+  if (labels.some(label => !validLabel.test(label))) return null;
+
+  const tld = labels[labels.length - 1];
+  if (!/^[a-z]{2,63}$/i.test(tld)) return null;
+
+  if (value.length > 253) return null;
+
   return `https://www.${value}`;
 }
 
