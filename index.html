@@ -7,7 +7,7 @@
   <meta name="description" content="MasterScan — Web Status & System Analyzer">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -33,13 +33,13 @@
     <div class="divider"></div>
 
     <form id="scanForm">
-      <label for="website">ตรวจสอบชื่อเว็บไซต์</label>
+      <label for="website">ตรวจสอบชื่อเว็บไซต์ <span>/ WEBSITE SCAN</span></label>
       <div class="input-wrap">
         <span>&gt;</span>
-        <input id="website" type="text" placeholder="เช่น win555" autocomplete="off" maxlength="80">
+        <input id="website" type="text" placeholder="เช่น win555 / e.g. win555" autocomplete="off" maxlength="80">
       </div>
-      <div class="hint">กรอกชื่อเว็บเท่านั้น เช่น <b>win555</b> หรือ <b>win555.com</b></div>
-      <button id="scanButton" class="scan-button" type="submit">SCAN SYSTEM</button>
+      <div class="hint">กรอกชื่อเว็บเท่านั้น / ENTER WEBSITE NAME ONLY<br>เช่น <b>win555</b> หรือ <b>win555.com</b></div>
+      <button id="scanButton" class="scan-button" type="submit">SCAN SYSTEM <span>/ เริ่มสแกน</span></button>
     </form>
 
     <div id="dynamic"></div>
