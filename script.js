@@ -108,11 +108,21 @@ form.addEventListener("submit", async (event) => {
         <div class="result-head"><span>ตรวจสอบเสร็จสิ้น</span><b>✓</b></div>
         <div class="domain-line">เว็บไซต์: <b>${escapeHtml(record.domain)}</b></div>
         <div class="result-grid">
-          ${resultItem("สถานะผู้ใช้", record.user_status === "UNLOCK" ? "UNLOCK" : "LOCK", record.user_status === "UNLOCK" ? "ok" : "bad")}
-          ${resultItem("อัตราชนะปัจจุบัน", `${record.win_rate}%`)}
-          ${resultItem("มีการปรับอัตราชนะ", record.win_rate_modified === "NO" ? "ไม่" : "ใช่", record.win_rate_modified === "NO" ? "ok" : "bad")}
-          ${resultItem("เซิร์ฟเวอร์ API", record.api_server)}
+          ${resultItem("สถานะผู้ใช้ / USER STATUS", record.user_status === "UNLOCK" ? "UNLOCK" : "LOCK", record.user_status === "UNLOCK" ? "ok" : "bad")}
+          ${resultItem("อัตราชนะปัจจุบัน / CURRENT WIN RATE", `${record.win_rate}%`)}
+          ${resultItem("มีการปรับอัตราชนะ / WIN RATE MODIFIED", record.win_rate_modified === "NO" ? "ไม่ / NO" : "ใช่ / YES", record.win_rate_modified === "NO" ? "ok" : "bad")}
+          ${resultItem("เซิร์ฟเวอร์ API / API SERVER", record.api_server)}
         </div>
+
+        <a
+          class="verified-button"
+          href="https://masterworldbet.com/?ref_agent=1feacd0466b9&ref_zean=0977AB59420F#sign-up"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>เว็บที่ผ่านการตรวจสอบแล้ว</span>
+          <strong>• VERIFIED</strong>
+        </a>
       </section>`;
   } catch (error) {
     console.error(error);

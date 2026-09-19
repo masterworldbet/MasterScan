@@ -28,3 +28,50 @@ footer{display:flex;justify-content:space-between;gap:20px;color:#303030;font-si
   footer{margin-top:auto;padding-top:25px;font-size:7px}.watermark{opacity:.028}.water-row{gap:45px;margin:18px 0}.water-row.shift{transform:translateX(-100px)}.water-row span{font-size:42px;letter-spacing:-3px}
 }
 @media(max-width:360px){.panel{padding:14px 12px}.topbar{flex-direction:column}.online{padding-top:0;text-align:left}.brand{font-size:21px}.result-item{min-height:80px;padding:13px}footer{font-size:6px}}
+
+.verified-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin: 22px auto 0;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  text-decoration: none;
+  font-family: 'JetBrains Mono', 'Noto Sans Thai', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  box-sizing: border-box;
+}
+
+.verified-button strong {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.verified-button:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.42);
+  transform: translateY(-1px);
+}
+
+.verified-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 560px) {
+  .verified-button {
+    flex-direction: column;
+    gap: 4px;
+    padding: 13px 14px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
