@@ -1,30 +1,34 @@
-# MasterScan — GitHub Pages
+# MasterScan V2 — GitHub Pages
 
-This version is **static HTML/CSS/JavaScript** and is designed to run directly on GitHub Pages.
+ไฟล์ชุดนี้เป็น Static HTML/CSS/JavaScript สำหรับ GitHub Pages โดยตรง
 
-## Upload
-
-Upload these files to the root of the `MasterScan` repository:
+## ใส่ใน Repository
 
 - `index.html`
 - `style.css`
 - `script.js`
 
-Then GitHub Pages should serve `index.html`.
+## สิ่งที่ปรับ
 
-## Features
+- ผลลัพธ์เปลี่ยนเป็นภาษาไทย
+- ช่องกรอกตรวจสอบเฉพาะชื่อเว็บ/โดเมน
+- `win555` จะ normalize เป็น `https://www.win555.com`
+- ปฏิเสธอักขระภาษาไทยและข้อความที่ไม่ใช่โดเมน
+- เตรียมฟังก์ชัน `lookupFromSupabase()` สำหรับต่อฐานข้อมูล
+- ถ้าไม่มีข้อมูลใน Supabase จะขึ้น `ไม่พบข้อมูลเว็บไซต์นี้ในระบบ`
+- ไม่สุ่มหรือสร้างผลลัพธ์สำหรับเว็บที่ไม่มีข้อมูล
 
-- Programmer / terminal UI
-- Username input
-- 10-second scan countdown
-- Progress bar
-- Demo scan result
-- 3 scans per day stored in browser localStorage
-- Masterclass Scan watermark
-- Mobile responsive
+## Supabase
 
-### Important
+เมื่อพร้อม ให้ต่อ `lookupFromSupabase()` กับตารางของคุณ โดยให้ค้นจาก normalized URL และคืนค่า:
 
-This is a frontend demo. GitHub Pages cannot securely run a private backend API or enforce a tamper-resistant daily quota.
+```js
+{
+  user_status: "LOCK" | "UNLOCK",
+  win_rate: "xx%",
+  win_rate_modified: "YES" | "NO",
+  api_server: "..."
+}
+```
 
-The 3/day limit here is for UI testing only. A production version needs a backend/database.
+ควรบังคับความถูกต้องและสิทธิ์การอ่านด้วย Supabase RLS.
