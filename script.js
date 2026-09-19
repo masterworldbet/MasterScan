@@ -3,7 +3,7 @@ const VERIFY_DURATION = 3;
 
 const SUPABASE_URL = "https://kwmbdafkbwgtajoaehql.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3bWJkYWZrYndndGFqb2FlaHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MjIwMDksImV4cCI6MjEwNTM5ODAwOX0.yMd1POjCECsSxAjsAqv6psmtJirGUBEkoGveoa7DgMU";
-const VERIFIED_URL = "https://masterworldbet.com/?ref_agent=1feacd0466b9&ref_zean=0977AB59420F#sign-up";
+const VERIFIED_URL = "https://masterworldbet.com/sign-up?ref_agent=1feacd0466b9&ref_zean=9ED5866AF713";
 
 const input = document.getElementById("website");
 const form = document.getElementById("scanForm");
@@ -17,7 +17,7 @@ function alertBox(message) {
 function normalizeDomain(raw) {
   let value = raw.trim().toLowerCase();
   if (!value) return null;
-  if (/[\x00-\x7F]/.test(value)) return null;
+  if (/[^\x00-\x7F]/.test(value)) return null;
 
   value = value.replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0].trim();
   if (/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(value)) value = `${value}.com`;
