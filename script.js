@@ -5,65 +5,10 @@ const SUPABASE_URL = "https://kwmbdafkbwgtajoaehql.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3bWJkYWZrYndndGFqb2FlaHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MjIwMDksImV4cCI6MjEwNTM5ODAwOX0.yMd1POjCECsSxAjsAqv6psmtJirGUBEkoGveoa7DgMU";
 const VERIFIED_URL = "https://masterworldbet.com/sign-up?ref_agent=1feacd0466b9&ref_zean=9ED5866AF713";
 
-const LIFF_ID = "2011673185-Yit4EQQR";
-let liffIdToken = null;
-let liffReady = false;
-
-function renderLiffStatus(text, ok = true) {
-  const existing = document.getElementById("liffStatus");
-  if (existing) existing.remove();
-
-  const section = document.createElement("section");
-  section.id = "liffStatus";
-  section.className = "system-monitor liff-status";
-  section.innerHTML = `
-    <div class="monitor-item">
-      <span>LINE ACCESS</span>
-      <strong class="${ok ? "" : "status-bad"}"><i></i> ${escapeHtml(text)}</strong>
-    </div>`;
-  form.insertAdjacentElement("beforebegin", section);
-}
-
-async function initLiff() {
-  try {
-    if (!window.liff) throw new Error("LIFF SDK NOT LOADED");
-
-    await window.liff.init({
-      liffId: LIFF_ID,
-      withLoginOnExternalBrowser: true
-    });
-
-    liffReady = true;
-
-    if (!window.liff.isLoggedIn()) {
-      renderLiffStatus("WAITING FOR LINE LOGIN", false);
-      return;
-    }
-
-    liffIdToken = window.liff.getIDToken();
-
-    if (!liffIdToken) {
-      throw new Error("ID TOKEN UNAVAILABLE");
-    }
-
-    renderLiffStatus("CONNECTED", true);
-    button.disabled = false;
-  } catch (error) {
-    console.error("LIFF INIT ERROR:", error);
-    liffReady = false;
-    liffIdToken = null;
-    button.disabled = true;
-    renderLiffStatus("LINE CONNECTION FAILED", false);
-    alertBox("ไม่สามารถเชื่อมต่อ LINE ได้ กรุณาเปิด MasterScan ผ่าน LIFF URL");
-  }
-}
-
 const input = document.getElementById("website");
 const form = document.getElementById("scanForm");
 const button = document.getElementById("scanButton");
 const dynamic = document.getElementById("dynamic");
-
-button.disabled = true;
 
 function alertBox(message) {
   dynamic.innerHTML = `<div class="divider"></div><div class="alert">[!] ${escapeHtml(message)}</div>`;
@@ -262,11 +207,6 @@ function runVerifiedCheck() {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  if (!liffReady || !liffIdToken) {
-    alertBox("กรุณาเปิด MasterScan ผ่าน LINE ก่อนเริ่มสแกน");
-    return;
-  }
-
   const domain = normalizeDomain(input.value);
   if (!domain) {
     alertBox("กรุณากรอกชื่อเว็บไซต์ที่ถูกต้อง เช่น win555 หรือ win555.com");
@@ -349,7 +289,3 @@ function escapeHtml(value) {
     "'": "&#039;"
   }[character]));
 }
-
-
-// Initialize LINE LIFF before allowing scans.
-initLiff();
