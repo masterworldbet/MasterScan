@@ -103,10 +103,14 @@ function renderActivity(lines) {
 
 function renderVerifiedButton() {
   return `
-    <button id="verifiedButton" class="verified-button" type="button">
-      <span>เว็บที่ผ่านการตรวจสอบแล้ว</span>
-      <strong>• VERIFIED</strong>
-    </button>`;
+    <section class="verified-offer">
+      <div class="verified-offer-title">เว็บที่ผ่านการตรวจสอบแล้ว <strong>• VERIFIED</strong></div>
+      <div class="verified-offer-copy">ตรวจสอบสถานะของเว็บไซต์ที่แนะนำก่อนเข้าใช้งาน</div>
+      <button id="verifiedButton" class="verified-button" type="button">
+        <span>ตรวจสอบสถานะ</span>
+        <strong>• VERIFY NOW</strong>
+      </button>
+    </section>`;
 }
 
 function renderVerifiedLink() {
@@ -165,7 +169,36 @@ function runVerifiedCheck() {
             <span class="success-mark">✓</span>
             <div><strong>ACCESS VERIFIED</strong><small>การตรวจสอบเสร็จสมบูรณ์</small></div>
           </div>
-          ${renderVerifiedLink()}`;
+          <div class="master-offer-loading">กำลังโหลดสถานะเว็บไซต์ / LOADING VERIFIED STATUS...</div>`;
+
+        lookupFromSupabase("https://www.masterworldbet.com")
+          .then(masterRecord => {
+            const rate = masterRecord?.win_rate != null ? `${masterRecord.win_rate}%` : "—";
+            const status = masterRecord?.user_status === "UNLOCK" ? "UNLOCKED" : "LOCKED";
+            verification.innerHTML = `
+              <div class="verified-success">
+                <span class="success-mark">✓</span>
+                <div><strong>ACCESS VERIFIED</strong><small>การตรวจสอบเสร็จสมบูรณ์</small></div>
+              </div>
+              <div class="master-offer-card">
+                <div class="master-offer-label">เว็บที่ผ่านการตรวจสอบแล้ว <strong>• VERIFIED</strong></div>
+                <div class="master-offer-brand">MASTERWORLDBET</div>
+                <div class="master-offer-grid">
+                  <div><span>สถานะ / STATUS</span><strong class="${status === "UNLOCKED" ? "status-ok" : "status-bad"}">${status}</strong></div>
+                  <div><span>อัตราชนะ / WIN RATE</span><strong>${escapeHtml(rate)}</strong></div>
+                </div>
+                <div class="master-offer-note">✓ SYSTEM CHECKED &nbsp; • &nbsp; READY TO ACCESS</div>
+                ${renderVerifiedLink()}
+              </div>`;
+          })
+          .catch(() => {
+            verification.innerHTML = `
+              <div class="verified-success">
+                <span class="success-mark">✓</span>
+                <div><strong>ACCESS VERIFIED</strong><small>การตรวจสอบเสร็จสมบูรณ์</small></div>
+              </div>
+              ${renderVerifiedLink()}`;
+          });
       }, 350);
     }
   }, (VERIFY_DURATION * 1000) / steps.length);
