@@ -90,3 +90,94 @@ footer{display:flex;justify-content:space-between;gap:20px;color:#303030;font-si
 
 /* Verified recommendation card */
 .verified-offer{margin-top:22px;border:1px solid rgba(0,255,136,.28);background:rgba(0,255,136,.018);padding:16px}.verified-offer-title{color:#ddd;font-size:12px;font-weight:800;letter-spacing:.4px}.verified-offer-title strong{color:var(--green)}.verified-offer-copy{margin-top:6px;color:#555;font-size:8px;line-height:1.7}.verified-offer .verified-button{margin-top:14px}.master-offer-loading{padding:14px 0;color:#555;font-size:8px;text-align:center}.master-offer-card{margin-top:4px;border-top:1px solid rgba(0,255,136,.18);padding-top:14px}.master-offer-label{color:var(--green);font-size:9px;font-weight:800;letter-spacing:.7px}.master-offer-label strong{font-weight:800}.master-offer-brand{margin-top:7px;color:#ddd;font-size:18px;font-weight:800;letter-spacing:1.5px}.master-offer-grid{display:grid;grid-template-columns:1fr 1fr;margin-top:13px;border:1px solid var(--line)}.master-offer-grid>div{padding:11px 12px;display:flex;flex-direction:column;gap:6px}.master-offer-grid>div+div{border-left:1px solid var(--line)}.master-offer-grid span{color:#555;font-size:7px;letter-spacing:1px}.master-offer-grid strong{font-size:14px;color:#ddd}.master-offer-note{margin:11px 0;color:#4f4f4f;font-size:7px;letter-spacing:.5px;text-align:center}@media(max-width:600px){.verified-offer{padding:13px}.verified-offer-title{font-size:10px}.verified-offer-copy{font-size:7px}.master-offer-brand{font-size:16px}.master-offer-grid strong{font-size:13px}.master-offer-note{font-size:6px}}
+
+/* Mobile compact layout: keep the main UI centered and reduce vertical scrolling */
+@media (max-width: 600px) {
+  html, body { width:100%; overflow-x:hidden; }
+  .shell {
+    min-height:100svh;
+    height:auto;
+    padding:12px 8px;
+    align-items:center;
+    justify-content:center;
+  }
+  .panel {
+    width:min(100%, 430px);
+    padding:18px 14px;
+    margin:0 auto;
+  }
+  .brand { font-size:24px; }
+  .subtitle { font-size:8.5px; }
+  .online { font-size:7.5px; }
+  .divider { margin:16px 0; }
+  label { font-size:10px; }
+  .input-wrap { height:52px; }
+  .input-wrap input { font-size:16px; }
+  .hint { font-size:7.5px; }
+  .scan-button { height:50px; font-size:12px; }
+
+  /* Result cards: 2 columns instead of a long single column */
+  .result-grid { grid-template-columns:1fr 1fr; }
+  .result-item { min-height:88px; padding:12px; gap:8px; }
+  .result-item > span { font-size:8px; }
+  .result-item strong { font-size:15px; }
+  .result-head { font-size:10px; margin-bottom:12px; }
+  .domain-line { font-size:8px; margin-bottom:12px; }
+
+  /* Compact system monitor */
+  .system-monitor { grid-template-columns:repeat(3,1fr); margin-top:14px; }
+  .monitor-item {
+    border-right:1px solid var(--line);
+    border-bottom:0;
+    padding:9px 6px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    text-align:center;
+  }
+  .monitor-item:last-child { border-right:0; }
+  .monitor-item span { font-size:6.5px; letter-spacing:.7px; }
+  .monitor-item strong { font-size:8px; }
+
+  /* Keep activity short */
+  .activity-panel { margin-top:10px; padding:8px 10px; }
+  .activity-title { font-size:7px; margin-bottom:4px; }
+  .activity-log { font-size:6.8px; line-height:1.55; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+  .verified-offer { margin-top:14px; padding:12px; }
+  .verified-offer-title { font-size:10px; line-height:1.5; }
+  .verified-offer-copy { font-size:7px; line-height:1.55; }
+  .verified-offer .verified-button { margin-top:10px; }
+  .verified-button { padding:11px 10px; font-size:10px; }
+
+  /* Recommendation data in one compact row */
+  .master-offer-brand { font-size:15px; margin-top:5px; }
+  .master-offer-grid { margin-top:9px; }
+  .master-offer-grid > div { padding:8px 7px; gap:4px; }
+  .master-offer-grid span { font-size:6px; }
+  .master-offer-grid strong { font-size:12px; }
+  .master-offer-note { margin:7px 0; font-size:6px; }
+
+  .verification-panel { margin-top:14px; padding:11px; }
+  .verification-head { margin-bottom:8px; }
+  .verification-log { margin-top:8px; line-height:1.65; }
+  .verified-success { padding:2px 0 9px; }
+  .success-mark { width:28px; height:28px; }
+  .verified-success strong { font-size:10px; }
+  .verified-success small { font-size:6.5px; }
+  .visit-button { padding:11px 10px; font-size:9.5px; }
+
+  footer { margin-top:16px; padding-top:0; }
+}
+
+@media (max-width: 360px) {
+  .shell { padding:8px 6px; }
+  .panel { padding:15px 11px; }
+  .brand { font-size:21px; }
+  .result-item { min-height:82px; padding:10px; }
+  .result-item strong { font-size:14px; }
+  .monitor-item span { font-size:6px; }
+  .monitor-item strong { font-size:7.5px; }
+}
