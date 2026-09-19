@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MasterScan</title>
+  <meta name="description" content="MasterScan — Web Status & System Analyzer">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="shell">
+    <div class="watermark" aria-hidden="true">
+      <div class="water-row"><span>Masterclass Scan</span><span>Masterclass Scan</span><span>Masterclass Scan</span></div>
+      <div class="water-row shift"><span>Masterclass Scan</span><span>Masterclass Scan</span><span>Masterclass Scan</span></div>
+      <div class="water-row"><span>Masterclass Scan</span><span>Masterclass Scan</span><span>Masterclass Scan</span></div>
+      <div class="water-row shift"><span>Masterclass Scan</span><span>Masterclass Scan</span><span>Masterclass Scan</span></div>
+      <div class="water-row"><span>Masterclass Scan</span><span>Masterclass Scan</span><span>Masterclass Scan</span></div>
+      <div class="water-row shift"><span>Masterclass Scan</span><span>Masterclass Scan</span><span>Masterclass Scan</span></div>
+      <div class="water-row"><span>Masterclass Scan</span><span>Masterclass Scan</span><span>Masterclass Scan</span></div>
+    </div>
+
+    <section class="panel">
+      <header class="topbar">
+        <div>
+          <div class="brand"><span class="prompt">&gt;</span> MASTERSCAN<span class="cursor">_</span></div>
+          <div class="subtitle">WEB STATUS &amp; SYSTEM ANALYZER</div>
+        </div>
+        <div class="online"><i></i> SYSTEM ONLINE</div>
+      </header>
+
+      <div class="divider"></div>
+
+      <form id="scanForm">
+        <label for="username">ENTER USERNAME</label>
+        <div class="input-wrap">
+          <span>&gt;</span>
+          <input id="username" type="text" placeholder="username" autocomplete="off" maxlength="50">
+        </div>
+        <button id="scanButton" class="scan-button" type="submit">SCAN SYSTEM</button>
+      </form>
+
+      <div class="quota">
+        <span>DAILY SCANS</span>
+        <strong id="quota">0 / 3</strong>
+      </div>
+
+      <div id="dynamic"></div>
+
+      <footer>
+        <span>MASTERSCAN v1.0</span>
+        <span>SECURE TERMINAL</span>
+      </footer>
+    </section>
+  </main>
+  <script src="./script.js"></script>
+</body>
+</html>

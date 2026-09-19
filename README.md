@@ -1,38 +1,30 @@
-# MasterScan
+# MasterScan — GitHub Pages
 
-Minimal programmer-style Web Status & System Analyzer.
+This version is **static HTML/CSS/JavaScript** and is designed to run directly on GitHub Pages.
 
-## Run locally
+## Upload
 
-```bash
-npm install
-npm run dev
-```
+Upload these files to the root of the `MasterScan` repository:
 
-Open http://localhost:3000
+- `index.html`
+- `style.css`
+- `script.js`
 
-## Deploy to GitHub + Vercel
+Then GitHub Pages should serve `index.html`.
 
-1. Create a new GitHub repository.
-2. Upload all files in this project.
-3. Import the repository into Vercel.
-4. Framework: Next.js.
-5. Build command: `npm run build`.
-6. Deploy.
+## Features
 
-## Important
+- Programmer / terminal UI
+- Username input
+- 10-second scan countdown
+- Progress bar
+- Demo scan result
+- 3 scans per day stored in browser localStorage
+- Masterclass Scan watermark
+- Mobile responsive
 
-The current `/api/scan` endpoint contains DEMO DATA.
+### Important
 
-The 10-second countdown is handled in the browser. The API currently returns a demo result after the countdown.
+This is a frontend demo. GitHub Pages cannot securely run a private backend API or enforce a tamper-resistant daily quota.
 
-The 3 scans/day limit in this V1 is stored in browser localStorage. It is suitable for UI testing, but it is NOT a secure server-side quota.
-
-For a production 3-scans/day system, connect the scan route to Supabase/Redis/database and enforce the quota server-side.
-
-## Result fields
-
-- User status: LOCKED / UNLOCKED
-- Current win rate
-- Win rate modified: YES / NO
-- API server
+The 3/day limit here is for UI testing only. A production version needs a backend/database.
